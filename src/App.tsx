@@ -151,7 +151,22 @@ export default function App() {
       } else {
         // Fallback para lista estática caso WlExtension não esteja disponível
         const staticChannels: Channel[] = [
-          
+          {
+            "descricao": "WhatsApp (Cloud)",
+            "status": "REGISTERED",
+            "canalId": "65a9c891631763c3725cf3f6",
+            "identificador": "525092970691476",
+            "number": "5092970691476",
+            "ddi": "52",
+            "organizacao": "Grupo NFA",
+            "type": 4,
+            "organizationId": "65a9c7a8c03a819e147fd6b3",
+            "organizacaoId": "65a9c7a8c03a819e147fd6b3",
+            "curVersion": "latest",
+            "curOrlastServerInfo": "general",
+            "needsUpdate": false,
+            "lastUpdate": "0001-01-01T00:00:00"
+          }
         ];
         setChannels(staticChannels);
       }
@@ -246,11 +261,11 @@ export default function App() {
 
   // URL API
 
-   const API_URL = window.location.ancestorOrigins[0]
-  ? window.location.ancestorOrigins[0].replace("app", "api")
-  : "https://api.inovstar.com";
+  //  const API_URL = window.location.ancestorOrigins[0]
+  // ? window.location.ancestorOrigins[0].replace("app", "api")
+  // : "https://api.inovstar.com";
 
-  // const API_URL = "https://api.inovstar.com";
+  const API_URL = "https://api.inovstar.com";
 
 
   console.log(API_URL);
@@ -966,6 +981,7 @@ export default function App() {
                         aria-expanded={channelSearchOpen}
                         className="w-full justify-between h-9"
                         disabled={isExporting || isImporting || isLoadingChannels}
+                        title={isLoadingChannels ? "Carregando canais..." : getSelectedChannelLabel()}
                       >
                         <span className="truncate">
                           {isLoadingChannels ? "Carregando canais..." : getSelectedChannelLabel()}
@@ -986,6 +1002,7 @@ export default function App() {
                               .map((channel) => {
                                 const isActive = channel.status === 'REGISTERED' || channel.status === 'CONNECTED';
                                 const statusText = isActive ? 'Conectado' : 'Desconectado';
+                                const channelLabel = `${channel.descricao} - ${channel.organizacao}`;
                                 return (
                                   <CommandItem
                                     key={channel.canalId}
@@ -1006,9 +1023,16 @@ export default function App() {
                                           <p>{statusText}</p>
                                         </TooltipContent>
                                       </Tooltip>
-                                      <span className="flex-1 truncate">
-                                        {channel.descricao} <span className="text-muted-foreground">- {channel.organizacao}</span>
-                                      </span>
+                                      <Tooltip>
+                                        <TooltipTrigger asChild>
+                                          <span className="flex-1 truncate">
+                                            {channel.descricao} <span className="text-muted-foreground">- {channel.organizacao}</span>
+                                          </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                          <p>{channelLabel}</p>
+                                        </TooltipContent>
+                                      </Tooltip>
                                     </div>
                                   </CommandItem>
                                 );
