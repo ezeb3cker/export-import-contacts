@@ -236,7 +236,7 @@ export default function App() {
     if (selectedChannelId) {
       const channel = channels.find(c => c.canalId === selectedChannelId);
       if (channel) {
-        return `${channel.descricao} - ${channel.organizacao}`;
+        return `${channel.descricao}`;
       }
     }
     return "Clique para selecionar um canal";
@@ -261,11 +261,9 @@ export default function App() {
 
   // URL API
 
-  //  const API_URL = window.location.ancestorOrigins[0]
-  // ? window.location.ancestorOrigins[0].replace("app", "api")
-  // : "https://api.inovstar.com";
-
-  const API_URL = "https://api.inovstar.com";
+   const API_URL = window.location.ancestorOrigins[0]
+  ? window.location.ancestorOrigins[0].replace("app", "api")
+  : "https://api.inovstar.com";
 
 
   console.log(API_URL);
